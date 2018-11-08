@@ -1,0 +1,31 @@
+import functools
+
+def standalone(self,a=1,b=2):
+    "Standalone function"
+    print('called standalone with:',(self,a,b))
+    if self is None:
+        print('  self.attr=',self.attr)
+
+class Myclass:
+    "Demostration class for functools"
+
+    def __init__(self):
+        self.attr = 'instance attribute'
+
+        method1 = functools.partialmethod(standalone)
+        method2 = functools.partial(standalone)
+
+o = Myclass()
+print('standalone')
+standalone(None)
+print()
+
+print('method1 as partialmethod')
+o.method1()
+print()
+
+print('method2 as partial')
+try:
+    o.method2()
+except TypeError as err:
+    print('Error : {}'.format(err))
